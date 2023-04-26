@@ -1,68 +1,25 @@
-const { dominios, contextos, temas } = require("./states");
-const { messages } = require("./messages");
 const readline = require('readline');
+const { dominios, contextos, temas } = require("./states");
+const { answers } = require("./answers");
 // import { dominios, contextos, temas } from "./states"; for html later
-// import { messages } from "./messages"; for html later
+// import { answers } from "./answers"; for html later
 
-// Create an interface for reading input
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-// Arrays
-let dominiosArray = []
-let contextosArray = []
-let temasArray = []
-let answersArray = []
-let newDominiosArray = []
-let newContextosArray = []
-let newTemasArray = []
-
-async function askQuestion() {
-    return new Promise((resolve) => {
-        rl.question('¿Qué te gustaría saber?', (userInput) => {
-            console.log('\n')
-            resolve(userInput);
-        });
-    });
-}
-
-async function iterate() {
-    let condition = true;
-    while (condition) {
-        const userInput = await askQuestion();
-        const textInput = userInput.toLocaleUpperCase();
-        const indexes = calculateIndex(textInput);
-
-        for (let i = 0; i < indexes.length; i++) {
-            console.log(messages[Number(indexes[i])]);
-        }
-        
-        console.log('\n')
-        // Update condition to exit loop if desired
-        // condition = false;
-    }
-    rl.close();
-}
-iterate();
-
-function calculateIndex(textInput) {
+function getAnswers(textInput) {
     answersArray = []
     newDominiosArray = []
     newContextosArray = []
     newTemasArray = []
-
+    
     // Revisar las expresiones regulares para guardar los estados encontrados
     checkDominios(textInput);
     checkContextos(textInput);
     checkTemas(textInput);
-
+    
     // Revisar casos especiales
     checkCases();
     
     answersArray = combineStates();
- 
+    
     return answersArray;
 }
 
@@ -133,10 +90,58 @@ function combineStates(){
             }
         }
     }
-
-
+    
+    // No hay respuesta
     if (answersArray.length == 0){
         return ['0']
     }
+    
     return answersArray
-}  
+} 
+
+async function askQuestion() {
+    return new Promise((resolve) => {
+        readLineInterface.question('¿Qué te gustaría saber?', (userInput) => {
+            console.log('\n')
+            resolve(userInput);
+        });
+    });
+}
+
+async function iterate() {
+    let condition = true;
+    while (condition) {
+        const userInput = await askQuestion();
+        const textInput = userInput.toLocaleUpperCase();
+        const answersIndexes = getAnswers(textInput);
+        
+        for (let i = 0; i < answersIndexes.length; i++) {
+            console.log(answers[Number(answersIndexes[i])]);
+        }
+        
+        console.log('\n')
+        // Update condition to exit loop if desired
+        // condition = false;
+    }
+    readLineInterface.close();
+}
+
+// Create an interface for reading input
+const readLineInterface = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// Arrays
+// Estos arrays funcionan como la "memoria" del programa
+let dominiosArray = []
+let contextosArray = []
+let temasArray = []
+
+// Estos arrays se crean en cada iteración y se guardan en los arrays de arriba de ser necesario
+let answersArray = []
+let newDominiosArray = []
+let newContextosArray = []
+let newTemasArray = []
+
+iterate();
