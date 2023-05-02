@@ -1,8 +1,27 @@
 const readline = require('readline');
 const { dominios, contextos, temas } = require("./states");
 const { answers } = require("./answers");
+const { regExVariables } = require("./regex");
+const { text } = require('stream/consumers');
 // import { dominios, contextos, temas } from "./states"; for html later
 // import { answers } from "./answers"; for html later
+
+// Arrays
+// Estos arrays funcionan como la "memoria" del programa
+let dominiosArray = []
+let contextosArray = []
+let temasArray = []
+
+// Estos arrays se crean en cada iteración y se guardan en los arrays de arriba de ser necesario
+let answersArray = []
+let newDominiosArray = []
+let newContextosArray = []
+let newTemasArray = []
+let messageIndex = ''
+
+let format = (isRegEx) => {
+    return isRegEx ? "1" : "0";
+};
 
 function getAnswers(textInput) {
     answersArray = []
@@ -21,6 +40,18 @@ function getAnswers(textInput) {
     answersArray = combineStates();
     
     return answersArray;
+}
+
+function getBinaryRegEx(textInput){
+    binaryRegEx = ''
+
+    // Loop through the array using a for loop
+    console.log(regExVariables.length)
+    for (let i = 0; i < regExVariables.length; i++) {
+        binaryRegEx += format(regExVariables[i].test(textInput))
+    }
+
+    return binaryRegEx
 }
 
 function checkDominios(textInput){
@@ -74,7 +105,7 @@ function checkCases(){
     
     // De no incluir dominios, default agricultura
     if (dominiosArray.length == 0){
-        return ['1']
+        dominiosArray = ['1']
     }
 }
 
@@ -113,8 +144,11 @@ async function iterate() {
     while (condition) {
         const userInput = await askQuestion();
         const textInput = userInput.toLocaleUpperCase();
+        const binaryRegEx = getBinaryRegEx(textInput);
         const answersIndexes = getAnswers(textInput);
         
+        console.log(binaryRegEx)
+
         for (let i = 0; i < answersIndexes.length; i++) {
             console.log(answers[Number(answersIndexes[i])]);
         }
@@ -132,16 +166,5 @@ const readLineInterface = readline.createInterface({
   output: process.stdout
 });
 
-// Arrays
-// Estos arrays funcionan como la "memoria" del programa
-let dominiosArray = []
-let contextosArray = []
-let temasArray = []
-
-// Estos arrays se crean en cada iteración y se guardan en los arrays de arriba de ser necesario
-let answersArray = []
-let newDominiosArray = []
-let newContextosArray = []
-let newTemasArray = []
 
 iterate();
