@@ -3,6 +3,7 @@ const { dominios, contextos, temas } = require("./states");
 const { answers } = require("./answers");
 const { regExVariables } = require("./regex");
 const { text } = require('stream/consumers');
+const { rna } = require('./domainNN')
 // import { dominios, contextos, temas } from "./states"; for html later
 // import { answers } from "./answers"; for html later
 
@@ -17,11 +18,7 @@ let answersArray = []
 let newDominiosArray = []
 let newContextosArray = []
 let newTemasArray = []
-let messageIndex = ''
 
-let format = (isRegEx) => {
-    return isRegEx ? "1" : "0";
-};
 
 function getAnswers(textInput) {
     answersArray = []
@@ -42,13 +39,17 @@ function getAnswers(textInput) {
     return answersArray;
 }
 
+let format = (isRegEx) => {
+    return isRegEx ? 1 : 0;
+};
+
 function getBinaryRegEx(textInput){
-    binaryRegEx = ''
+    binaryRegEx = []
 
     // Loop through the array using a for loop
-    console.log(regExVariables.length)
+    // console.log(regExVariables.length)
     for (let i = 0; i < regExVariables.length; i++) {
-        binaryRegEx += format(regExVariables[i].test(textInput))
+        binaryRegEx.push(format(regExVariables[i].test(textInput)))
     }
 
     return binaryRegEx
@@ -65,6 +66,7 @@ function checkDominios(textInput){
     if (newDominiosArray.length != 0){
         dominiosArray = newDominiosArray
     }
+    console.log(dominiosArray)
 }
 
 function checkContextos(textInput){
@@ -78,6 +80,7 @@ function checkContextos(textInput){
     if (newContextosArray.length != 0){
         contextosArray = newContextosArray
     }
+    console.log(contextosArray)
 }
 
 function checkTemas(textInput){
@@ -90,6 +93,7 @@ function checkTemas(textInput){
             }
             newTemasArray.push(key.toString())
         }
+        console.log(temasArray)
     }
     // Si se recibieron nuevas entradas utilizarlas, de no ser así, se utilizan los guardados anteriormente
     if (newTemasArray.length != 0){
@@ -146,8 +150,10 @@ async function iterate() {
         const textInput = userInput.toLocaleUpperCase();
         const binaryRegEx = getBinaryRegEx(textInput);
         const answersIndexes = getAnswers(textInput);
+
+        runRNA(binaryRegEx)
         
-        console.log(binaryRegEx)
+        // console.log(binaryRegEx)
 
         for (let i = 0; i < answersIndexes.length; i++) {
             console.log(answers[Number(answersIndexes[i])]);
@@ -166,5 +172,24 @@ const readLineInterface = readline.createInterface({
   output: process.stdout
 });
 
+function runRNA(entrada) {
+        let resultado = rna.run(entrada);
+        key = getMaxProbabilityKey(resultado)
+        console.log(entrada,resultado, key);
+        // showResult(entrada, resultado);
+    }
+
+// Encontrar la clave con la mayor probabilidad
+function getMaxProbabilityKey(output){
+    let maxProb = 0;
+    let maxKey;
+    for (let key in output) {
+      if (output[key] > maxProb) {
+        maxProb = output[key];
+        maxKey = key;
+      }
+    }
+    return maxKey
+}
 
 iterate();

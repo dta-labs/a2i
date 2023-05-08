@@ -5,12 +5,19 @@ const answers = {
     '0': "No se arma, no tengo la respuesta",
     '1': "No me queda claro si buscas respuestas de agricultura u otro dominio",
     '2': `¿De cuál cultivo te gustaría conocer esa información? \n Tengo información de:\n${cultivos.map(num => "- " + num).join("\n")}`,
+    '3': `¿De qué cosa te gustaría conocer esa información? \n Tengo información de: Suelo y Recursos`,
     '10101': "Agricultura->Maíz->Agua",
     '10102': "Agricultura->Maíz->Frecuencia",
     '10103': "Agricultura->Maíz->Fertilizante",
     '10201': "Agricultura->Frijol->Agua",
     '10202': "Agricultura->Frijol->Frecuencia",
-    '10203': "Agricultura->Frijol->Fertilizante"
+    '10203': "Agricultura->Frijol->Fertilizante",
+    '30304': "Biotecnología->Suelo->Bioseguridad",
+    '30305': "Biotecnología->Suelo->Biofertilizante",
+    '30306': "Biotecnología->Suelo->Transgénico",
+    '30404': "Biotecnología->Recursos->Bioseguridad",
+    '30405': "Biotecnología->Recursos->Biofertilizante",
+    '30406': "Biotecnología->Recursos->Transgénico"
     
     // '10101': "La cantidad de agua al regar el maíz varía según las condiciones del suelo, clima y etapa de crecimiento. En general, se recomienda proporcionar al menos 1 pulgada (2.5 cm) de agua por semana durante la etapa de crecimiento activo del maíz.\n",
     // '10102': "La frecuencia de riego del maíz depende del clima y la retención de agua del suelo. En general, se sugiere regar el maíz cuando la capa superior del suelo esté seca a unos 2-3 pulgadas (5-7.5 cm) de profundidad, evitando que el suelo se seque completamente.\n",

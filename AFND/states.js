@@ -1,4 +1,4 @@
-const { agricultura, agropecuario, maiz, frijol, agua, frecuencia, fertilizante, todo } = require('./regex')
+const { agricultura, agropecuario, biotecnologia, maiz, frijol, agua, frecuencia, fertilizante, todo } = require('./regex')
 // import {agricultura, agropecuario, maiz, frijol, agua, frecuencia, fertilizante} from './regex'; for html later
 
 // Poner de nuevo lo del binario
@@ -33,8 +33,8 @@ const { agricultura, agropecuario, maiz, frijol, agua, frecuencia, fertilizante,
 const dominios = {
     '1': agricultura, // arroz con pollo
     // '2': agua, // Mayor interés que hay actualmente, atrae inversión
-    // '3': agropecuario, // Casi todos tienen pecuaria
-    // '4': biotecnologia, // Apoyo del tec le serviria mas en esta carrera
+    '3': agropecuario, // Casi todos tienen pecuaria
+    '4': biotecnologia, // Apoyo del tec le serviria mas en esta carrera
 }
 
 const contextos = {
