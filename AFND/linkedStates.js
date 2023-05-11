@@ -56,45 +56,21 @@ recursos] = regExVariables
 
 // RegEx para cosas de "ahora hablemos de" o cosas así para cambiar de dominio. (Si tiene esos regex y aparte la NN dice que es de otro dominio, cambiamos (a ver qué tal))
 
-// 
+// Agregar información general a cada nivel
 
+// Decirle al programa la fuente y que busque ai. Ya que es algo externo podríamos usar chatgpt (bing tal vez, habrá que probarlo si usar agún api que tenga o ir manual a las referencias)
 
+// Revisar cómo funciona un transformer, en general de ai
+
+// Probar cómo funciona el bert con textos con viñetas. En este caso es para el plásmido de varias bacterias o no sé qué, cada uno en una viñeta
+
+// Si al principio no detecta ningún regEX, no entrar a dominio por suerte, mejor decir que no queda claro el dominio
+
+// Detectar la imagen o poniendo las características y la herramientas sepa cuál es, identificacion de microorganismos. Dar opciones de varias que pueden ser
+
+// Prueba, interpretar y ver qué microorganismo es, eso en la detección, como más específico. Lo de arriba reduce las pruebas necesarias a hacer
 
 const cultivos = ['Maíz', 'Frijol']
-
-const contextosAgricultura = {
-    '01': maiz,
-    '02': frijol,
-}
-
-const temasAgricultura = {
-    '0': todo,
-    '01': agua,
-    '02': frecuencia,
-    '03': fertilizante,
-}
-
-const contextosBiotecnologia = {
-    '03': suelo,
-    '04': recursos,
-}
-
-const temasBiotecnologia = {
-    // '0': todo,
-    '04': bioseguridad,
-    '05': biofertilizante,
-    '06': transgénico,
-}
-
-const agriculturaJson = {'regex':agricultura, 'contextos':contextosAgricultura, 'temas': temasAgricultura, canNavegate: 1}
-const biotecnologiaJson = {'regex':biotecnologia, 'contextos':contextosBiotecnologia, 'temas': temasBiotecnologia, canNavegate: 0}
-
-const dominios = {
-    '1': agriculturaJson, // arroz con pollo
-    // '2': agua, // Mayor interés que hay actualmente, atrae inversión
-    '3': biotecnologiaJson, // Apoyo del tec le serviria mas en esta carrera
-    // '4': agropecuario, // Casi todos tienen pecuaria
-}
 
 const json = {
     '1': {
@@ -127,7 +103,6 @@ const json = {
 }
 
 module.exports = {
-    dominios,
     json,
     // contextos,
     // temas,

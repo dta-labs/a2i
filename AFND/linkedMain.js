@@ -1,6 +1,7 @@
 const readline = require('readline');
 const { dominios, json } = require("./linkedStates");
 const { answers } = require("./answers");
+const { answersJson } = require("./answersJson");
 const { regExVariables } = require("./regex");
 const { text } = require('stream/consumers');
 const { rna } = require('./domainNN')
@@ -167,16 +168,43 @@ async function iterate() {
         const textInput = userInput.toLocaleUpperCase();
         const binaryRegEx = getBinaryRegEx(textInput);
         const answersIndexes = getAnswers(textInput, binaryRegEx);
+        let text = ""
+        let ref = ""
+        let images = []
+        let sounds = []
+        let videos = []
+        let result = ""
 
         console.log(answersIndexes, "what")
         
         for (let i = 0; i < answersIndexes.length; i++) {
-            if (answers[Number(answersIndexes[i])] != undefined){
-                console.log(answers[Number(answersIndexes[i])]);
+            if (answersJson[Number(answersIndexes[i])] != undefined){
+                answer = answersJson[Number(answersIndexes[i])]
+                text = answer["text"]
+                if (answer["ref"] == undefined){
+                    result = text
+                }
+                else{
+                    ref = answer["ref"][0]
+                    images = answer["images"]
+                    sounds =  answer["sounds"]
+                    videos = answer["videos"]
+                    result = text.replace("%ref%", ref)
+                }
+                console.log(result);
+                for (var k = 0; k < images.length; k++) {
+                    console.log(images[k]);
+                }
+                for (var k = 0; k < sounds.length; k++) {
+                    console.log(sounds[k]);
+                }
+                for (var k = 0; k < videos.length; k++) {
+                    console.log(videos[k]);
+                }
                 areThereAnswers = true;
             }
             if (!areThereAnswers){
-                console.log(answers['0'])
+                console.log(answersJson['0']["text"])
             }
         }
         
