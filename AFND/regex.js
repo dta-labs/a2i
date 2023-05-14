@@ -32,8 +32,15 @@ const regExVariables = [
     recursos,
 ]
 
+const dominios = {
+    '1': agricultura,
+    '2': biotecnologia,
+    '3': agropecuario,
+}
+
 module.exports = {
     regExVariables,
+    dominios
 }
 
 // export {agricultura, agropecuario, maiz, frijol, agua, frecuencia, fertilizante}; for html later
