@@ -7,9 +7,10 @@
     <figure class="text-center">
       <h1>Editor de contenido de Gaia</h1>
     </figure>
-    <!-- <script src="test.js"></script> -->
-    <script src="node_modules/angular/test.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="test.js"></script>
+    <!-- <script src="node_modules/angular/test.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
   <body>
@@ -108,6 +109,79 @@
             }
           </script>
 
+          <!-- Zip -->
+
+          <!-- <input type="file" id="archivoInput" accept=".zip">
+          <button onclick="leerArchivoZIP()">Leer Archivo ZIP</button>
+
+          <script>
+            function leerArchivoZIP() {
+              var archivoInput = document.getElementById('archivoInput');
+              var archivo = archivoInput.files[0];
+
+              if (archivo && archivo.type === 'application/zip') {
+                var lector = new FileReader();
+                lector.onload = function(e) {
+                  var contenido = e.target.result;
+
+                  // Crear un objeto JSZip con el contenido del archivo ZIP
+                  JSZip.loadAsync(contenido).then(function(zip) {
+                    // Leer el archivo TXT dentro del ZIP
+                    zip.file("archivo.txt").async("string").then(function(contenidoTXT) {
+                      // Guardar el contenido TXT en una variable
+                      var contenidoVariable = contenidoTXT;
+
+                      // Imprimir el contenido en la consola
+                      console.log(contenidoVariable);
+                    });
+                  });
+                };
+
+                lector.readAsArrayBuffer(archivo);
+              }
+            }
+          </script>
+
+          <br> -->
+
+          <!-- json -->
+
+          <input type="file" id="archivoInput" accept=".json">
+          <button onclick="leerArchivoJSON()">Leer Archivo JSON</button>
+
+          <script>
+            function leerArchivoJSON() {
+              var archivoInput = document.getElementById('archivoInput');
+              var archivo = archivoInput.files[0];
+
+              if (archivo) {
+                var lector = new FileReader();
+                lector.onload = function(e) {
+                  var contenido = e.target.result;
+
+                  // Convertir el contenido del archivo en un objeto JSON
+                  var objetoJSON = JSON.parse(contenido);
+
+                  // Guardar el objeto JSON en una variable
+                  var contenidoJSON = objetoJSON;
+
+                  // Imprimir el contenido en la consola
+                  console.log(contenidoJSON);
+                };
+
+                lector.readAsText(archivo);
+              }
+            }
+          </script>
+
+          <br>
+
+          <!-- txt -->
+
+          <input type="file" id="archivoInput" accept=".txt">
+          <button onclick="leerArchivo()">Cargar archivo de texto</button>
+          <div id="contenidoArchivo"></div>
+          
           <!-- Área de referencias -->
 
           <div class="mb-3">
@@ -183,7 +257,7 @@
             </div>
           </div>
           <!-- Botones subir y borrar -->
-          <input class="btn btn-primary" type="submit" value="Subir" onclick="guardarContenido(), guardarContenido2(), obtenerContenido()">
+          <input class="btn btn-primary" type="submit" value="Subir" onclick="guardarContenido(), guardarContenido2()">
           
           <input class="btn btn-primary" type="reset" value="Borrar">
           
