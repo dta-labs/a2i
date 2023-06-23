@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transformers.js</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .language-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .textbox-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 300px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bars-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+    <script type="module">
+        import { pipeline } from 'transformersxenova.js';
+    </script>
+</head>
+<body>
+  <h1>Transformers.js</h1>
+  <h2>ML-powered multilingual translation in Raw JavaScript!</h2>
+
+  <div class='container'>
+    <div class='language-container'>
+      <select id='sourceLanguage'>
+        <option value='eng_Latn'>English</option>
+        <option value='spa_Latn'>Spanish</option>
+        <option value='fra_Latn'>French</option>
+      </select>
+      <select id='targetLanguage'>
+        <option value='fra_Latn'>French</option>
+        <option value='eng_Latn'>English</option>
+        <option value='spa_Latn'>Spanish</option>
+      </select>
+    </div>
+
+    <div class='textbox-container'>
+      <textarea id='inputText' rows='3'>I love walking my dog.</textarea>
+      <textarea id='outputText' rows='3' readonly></textarea>
+    </div>
+  </div>
+
+  <button id='translateButton'>Translate</button>
+
+  <div class='progress-bars-container' id='progressBarsContainer'></div>
+
+  <script>
+    // Model loading
+    let ready = null;
+    let disabled = false;
+    let progressItems = [];
+
+    // Inputs and outputs
+    let input = 'I love walking my dog.';
+    let sourceLanguage = 'eng_Latn';
+    let targetLanguage = 'fra_Latn';
+    let output = '';
+
+    // Create a reference to the worker object.
+    const worker = new Worker('worker.js');
+
+    // We use the `addEventListener` method to setup the worker as soon as the DOM is loaded.
+    document.addEventListener('DOMContentLoaded', () => {
+      // Create a callback function for messages from the worker thread.
+      const onMessageReceived = (e) => {
+        switch (e.data.status) {
+          case 'initiate':
+            // Model file start load: add a new progress item to the list.
+            ready = false;
+            progressItems.push(e.data);
+            updateProgressBars();
+            break;
+
+          case 'progress':
+            // Model file progress: update one of the progress items.
+            progressItems = progressItems.map(item => {
+              if (item.file === e.data.file) {
+                return { ...item, progress: e.data.progress };
+              }
+              return item;
+            });
+            updateProgressBars();
+            break;
+
+          case 'done':
+            // Model file loaded: remove the progress item from the list.
+            progressItems = progressItems.filter(item => item.file !== e.data.file);
+            updateProgressBars();
+            break;
+
+          case 'ready':
+            // Pipeline ready: the worker is ready to accept messages.
+            ready = true;
+            break;
+
+          case 'update':
+            // Generation update: update the output text.
+            output = e.data.output;
+            document.getElementById('outputText').value = output;
+            break;
+
+          case 'complete':
+            // Generation complete: re-enable the "Translate" button
+            disabled = false;
+            break;
+        }
+      };
+
+      // Attach the callback function as an event listener.
+      worker.addEventListener('message', onMessageReceived);
+
+      // Bind the translate function to the click event of the "Translate" button.
+      document.getElementById('translateButton').addEventListener('click', translate);
+    });
+
+    function translate() {
+      disabled = true;
+      const text = document.getElementById('inputText').value;
+      const srcLang = document.getElementById('sourceLanguage').value;
+      const tgtLang = document.getElementById('targetLanguage').value;
+
+      worker.postMessage({
+        text: text,
+        src_lang: srcLang,
+        tgt_lang: tgtLang,
+      });
+    }
+
+    function updateProgressBars() {
+      const progressBarsContainer = document.getElementById('progressBarsContainer');
+      progressBarsContainer.innerHTML = '';
+
+      if (ready === false) {
+        const label = document.createElement('label');
+        label.textContent = 'Loading models... (only run once)';
+        progressBarsContainer.appendChild(label);
+      }
+
+      progressItems.forEach(data => {
+        const progressContainer = document.createElement('div');
+        const progressText = document.createElement('span');
+        progressText.textContent = data.file;
+        progressContainer.appendChild(progressText);
+
+        const progressBar = document.createElement('progress');
+        progressBar.value = data.progress;
+        progressBar.max = 100;
+        progressContainer.appendChild(progressBar);
+
+        progressBarsContainer.appendChild(progressContainer);
+      });
+    }
+  </script>
+</body>
+</html>

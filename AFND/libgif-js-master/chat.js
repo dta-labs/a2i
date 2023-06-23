@@ -1,13 +1,3 @@
-// Símbolos
-const saludo = RegExp("(HOLA|BUENAS|BUENOS|SALUDOS)");
-const quien = RegExp("(QUIEN|QUIÉN|QUE|QUÉ)");
-const eres = RegExp("(ERES)");
-const como = RegExp("(COMO|CÓMO|EN QUE|EN QUÉ)");
-const ayudar = RegExp("(AYUDAR)");
-const llamas = RegExp("(LLAMAS|NOMBRE|DICEN)");
-const cual = RegExp("(CUAL|CUÁL|CUALES|CUÁLES|QUE|QUÉ)");
-const objetivo = RegExp("(OBJETIVO|OBJETIVOS|FUNCION|FUNCIÓN)");
-const tareas = RegExp("(TAREA|TAREAS|HACES|HACER|FUNCIONES|ACTIVIDADES|DEDICAS)");
 // Matríz de estados
 // let estados = [[],
 //                 [],
