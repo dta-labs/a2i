@@ -46,10 +46,11 @@
               </select>
             </div>
           </div>
+
           <!-- Área de texto -->
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label"></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Contenido" rows="6"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Contenido" rows="3"></textarea>
           </div>
           
           <script>
@@ -58,6 +59,7 @@
               var contenido = textarea.value;
               
               console.log(contenido); // Imprimir el contenido en la consola
+              return(contenido)
             }
           </script>
 
@@ -98,10 +100,10 @@
               fetch(enlaceInput)
                 .then(response => response.text())
                 .then(texto => {
-                  // Guardar el contenido en una variable
+                  
                   var contenido = texto;
                   
-                  console.log(contenido); // Imprimir el contenido en la consola
+                  console.log(contenido);
                 })
                 .catch(error => {
                   console.error('Error al obtener el contenido:', error);
@@ -194,7 +196,8 @@
               var textarea = document.getElementById('exampleFormControlTextarea2');
               var contenido = textarea.value;
               
-              console.log(contenido); // Imprimir el contenido en la consola
+              console.log(contenido);
+              return(contenido)
             }
           </script>
 
@@ -257,13 +260,16 @@
             </div>
           </div>
           <!-- Botones subir y borrar -->
-          <input class="btn btn-primary" type="submit" value="Subir" onclick="guardarContenido(), guardarContenido2()">
+
+
+          <input class="btn btn-primary" type="submit" value="Subir" id="BotonSubir" >
           
           <input class="btn btn-primary" type="reset" value="Borrar">
           
           <script>
             // Asignar la función de borrar a través del botón "Borrar"
             document.querySelector('input[type="reset"]').addEventListener('click', function() {
+              document.getElementById('exampleFormControlTextarea0').value = '';
               document.getElementById('exampleFormControlTextarea1').value = '';
               document.getElementById('exampleFormControlTextarea2').value = '';
             });
@@ -293,15 +299,15 @@
           </nav>
           <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0"  style="height: calc(100vh - 150px); overflow: auto;">
             <h4 id="scrollspyHeading1">First heading</h4>
-            <p>This is some placeholder content</p>
+            <p id="contenidoParrafo"></p>
             <h4 id="scrollspyHeading2">Second heading</h4>
-            <p>This is some placeholder content</p>
+            <p id="contenidoParrafo2"></p>
             <h4 id="scrollspyHeading3">Third heading</h4>
-            <p>This is some placeholder content</p>
+            <p></p>
             <h4 id="scrollspyHeading4">Fourth heading</h4>
-            <p>This is some placeholder content</p>
+            <p></p>
             <h4 id="scrollspyHeading5">Fifth heading</h4>
-            <p>This is some placeholder content</p>
+            <p></p>
           </div>
         </div>
       </div>

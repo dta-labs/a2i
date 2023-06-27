@@ -17,3 +17,18 @@ function leerArchivo() {
     lector.readAsText(archivo);
   }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  var boton = document.getElementById("BotonSubir");
+
+  boton.addEventListener("click", function() {
+
+    var miVariable = guardarContenido();
+    var parrafo = document.getElementById("contenidoParrafo");
+    parrafo.textContent = miVariable;
+    var miVariable2 = guardarContenido2();
+    var parrafo = document.getElementById("contenidoParrafo2");
+    parrafo.textContent = miVariable2;
+
+  });
+});
