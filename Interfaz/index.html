@@ -10,6 +10,7 @@
     <script src="test.js"></script>
     <!-- <script src="node_modules/angular/test.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script> -->
+    <script src="https://unpkg.com/jszip@3.7.1/dist/jszip.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
@@ -113,38 +114,92 @@
 
           <!-- Zip -->
 
-          <!-- <input type="file" id="archivoInput" accept=".zip">
-          <button onclick="leerArchivoZIP()">Leer Archivo ZIP</button>
+          <input type="file" id="archivoInput" accept=".zip">
+          <button onclick="leerArchivo1()">Cargar archivo ZIP</button>
 
           <script>
-            function leerArchivoZIP() {
+            function leerArchivo1() {
+              var archivoInput = document.getElementById('archivoInput');
+              var archivo = archivoInput.files[0];
+              // console.log('Buenas');
+          
+              var lector = new FileReader();
+              // console.log('Buenas xd');
+              lector.onload = function(e) {
+                var contenido = e.target.result;
+                // console.log('Buenas xs');
+                JSZip.loadAsync(contenido)
+                  .then(function(zip) {
+                    // Obtener una matriz de nombres de archivos dentro del ZIP
+                    var archivos = Object.keys(zip.files);
+                    // Verificar si el archivo TXT existe en el ZIP
+                    if (archivos.includes("test.txt")) {
+                      // Leer el contenido del archivo TXT
+                      zip.file("test.txt").async("string")
+                        .then(function(txtContent) {
+                        // Aquí tienes el contenido del archivo TXT extraído del ZIP
+                        console.log(txtContent);
+                        })
+                        .catch(function(error) {
+                          console.error("Error al leer el archivo TXT:", error);
+                        });
+                    } else {
+                        console.error("El archivo TXT no se encontró en el ZIP.");
+                      }
+                    })
+                    .catch(function(error) {
+                      console.error("Error al cargar el archivo ZIP:", error);
+                    });
+                };
+          
+                lector.readAsArrayBuffer(archivo);
+              }
+          </script>
+
+          <br>
+
+          <input type="file" id="archivoInput" accept=".zip">
+          <button onclick="leerArchivo()">Cargar archivo ZIP con JSON</button>
+
+          <script>
+            function leerArchivo() {
               var archivoInput = document.getElementById('archivoInput');
               var archivo = archivoInput.files[0];
 
-              if (archivo && archivo.type === 'application/zip') {
-                var lector = new FileReader();
-                lector.onload = function(e) {
-                  var contenido = e.target.result;
-
-                  // Crear un objeto JSZip con el contenido del archivo ZIP
-                  JSZip.loadAsync(contenido).then(function(zip) {
-                    // Leer el archivo TXT dentro del ZIP
-                    zip.file("archivo.txt").async("string").then(function(contenidoTXT) {
-                      // Guardar el contenido TXT en una variable
-                      var contenidoVariable = contenidoTXT;
-
-                      // Imprimir el contenido en la consola
-                      console.log(contenidoVariable);
-                    });
+              var lector = new FileReader();
+              lector.onload = function(e) {
+                var contenido = e.target.result;
+                JSZip.loadAsync(contenido)
+                  .then(function(zip) {
+                    // Obtener una matriz de nombres de archivos dentro del ZIP
+                    var archivos = Object.keys(zip.files);
+                    // Verificar si el archivo JSON existe en el ZIP
+                    if (archivos.includes("Agricultura.json")) {
+                      // Leer el contenido del archivo JSON
+                      zip.file("Agricultura.json").async("string")
+                        .then(function(jsonContent) {
+                          // Aquí tienes el contenido del archivo JSON extraído del ZIP
+                          var objetoJSON = JSON.parse(jsonContent);
+                          var contenidoText = objetoJSON.text;
+                          console.log(contenidoText);
+                        })
+                        .catch(function(error) {
+                          console.error("Error al leer el archivo JSON:", error);
+                        });
+                    } else {
+                      console.error("El archivo JSON no se encontró en el ZIP.");
+                    }
+                  })
+                  .catch(function(error) {
+                    console.error("Error al cargar el archivo ZIP:", error);
                   });
-                };
+              };
 
-                lector.readAsArrayBuffer(archivo);
-              }
+              lector.readAsArrayBuffer(archivo);
             }
           </script>
 
-          <br> -->
+          <br>
 
           <!-- json -->
 
@@ -164,11 +219,11 @@
                   // Convertir el contenido del archivo en un objeto JSON
                   var objetoJSON = JSON.parse(contenido);
 
-                  // Guardar el objeto JSON en una variable
-                  var contenidoJSON = objetoJSON;
+                  // Acceder a la propiedad "text" del objeto JSON
+                  var contenidoTexto = objetoJSON.text;
 
                   // Imprimir el contenido en la consola
-                  console.log(contenidoJSON);
+                  console.log(contenidoTexto);
                 };
 
                 lector.readAsText(archivo);
