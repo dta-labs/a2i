@@ -1,0 +1,24 @@
+calcular probabilidad de que sea tema igual que lo del dominio
+Tokenizar el texto completo
+Devolver por oraciones o párrafos. Probabilidad. Ordenarlas por probabilidades
+Todo eso para determinar la respuesta más adecuada dentro de un textote de tema
+Separar por párrafo (\n) o "." o coma ","
+Lista de oraciones separadas por puntos
+Cuál de las oraciones tiene relación con la pregunta. (Según las palabras claves encontradas en la
+pregunta)
+Si la probabilidad es muy cercana entre las respuestas, posblemente hay que poner todas esas.
+Para eso hay que sacar una distancia global
+Rankear las oraciones y también los párrafos, de forma separada.
+
+"Requiere" ejemplo de palabras que podríamos ir agregando al modelo.
+pensar luego a silimitud entre palabras, requiere y requieren se parecen tanto que mejor pues dejamos la base.
+
+Buscar técnicas para lo de similu=itud, técnica para comparar palabras, similitud entre palabras. Medidas de distancia
+
+Si suelta una oración y el prota pide más, pues se lanza la siguiente más probable o ya el párrafo completo mejor que llevaba esa oración.
+
+Guaradr modelo en onnx
+Usarlo a ver
+Probar lo de translate manual así fast a ver cómo funciona
+Ver si la traducción es 1 a 1 o si infiere cosas intermedias (así sería más ici)
+

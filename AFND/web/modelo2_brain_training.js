@@ -29,9 +29,7 @@ function train(texto,indice){
   // const expresionRegular = new RegExp(texto, "i");
   // console.log(palabrasUnicas);
   palabrasUnicas.forEach((palabra) => {
-    const expresion = {
-      expresion: new RegExp(`\\b(${palabra})\\b`, "i"),
-    };
+    const expresion = new RegExp(`\\b(${palabra})\\b`, "i");
     expresionesRegulares.push(expresion);
   });
 
@@ -103,6 +101,9 @@ function train(texto,indice){
   modelo.train(data);
 
   const modelJSON = modelo.toJSON();
+  const expresionesRegularesStr = expresionesRegulares.map(expReg => expReg.toString());
+  modelJSON['expresionesRegulares'] = expresionesRegularesStr;
+  modelJSON['oracionClaseDict'] = oracionClaseDict;
   const modelData = JSON.stringify(modelJSON);
   let modelName = `${indice}TrainedModel.json`;
   fs.writeFileSync(modelName, modelData);

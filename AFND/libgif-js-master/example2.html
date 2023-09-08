@@ -19,11 +19,11 @@
 
     <!-- <link rel="icon" href="./images/DTA-Agricola.png" /> -->
 
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <script type="module">
+    <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" /> -->
+    <!-- <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
+    <!-- <script type="module">
         import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.1.0';
-    </script>
+    </script> -->
 
 </head>
 <style>
@@ -46,7 +46,51 @@
     }
 </style>
 <body>
-
+    <div class="container">
+        <h3>¡Bienvenido!</h3>
+        <h4>
+            Simulador del Asistente Agrícola Inteligente A<sup>2</sup>I
+        </h4>
+        
+        <!-- <img id="example1" src="" rel:animated_src="./example_gifs/gif1.gif" rel:auto_play="0"  width=100%; height=auto; display=block; margin=0 auto;/> -->
+        <center>
+            <img id="example1" src="" rel:animated_src="./example_gifs/gif1.gif" rel:auto_play="0" style="max-width: 100%; height: auto; display: block; margin: 0 auto;" width="467" height="375" />
+        </center>
+        <br>
+        <script type="text/javascript">
+            var sup1 = new SuperGif({ gif: document.getElementById('example1') } );
+            sup1.load();
+            function miFuncion() {
+                // alert('Hola, mundo!');
+                sup1.pause();
+            }
+        </script>
+        <!-- <a href="javascript:;" onmousedown="sup1.pause(); return false;">Pause</a> |
+        <a href="javascript:;" onmousedown="sup1.play(); return false;">Play</a> |
+        <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
+        <a href="javascript:;" onmousedown="sup1.move_relative(1); return false;">Step forward</a> |
+        <a href="javascript:;" onmousedown="sup1.move_relative(-1); return false;">Step back</a> -->
+        <div class="row">
+            <div class="input-field col s10">
+                <input placeholder="Hola, deseas conversar conmigo?" id="preguntas" type="text" class="validate">
+            </div>
+            <div class="input-field col s2">
+                <a id="microfonoOff" href="#" onClick="selectorMicrofono(true)"><i class="material-icons">mic_off</i></a>
+                <a id="microfonoOn" href="#" onClick="selectorMicrofono(false)" style="display: none;"><i class="material-icons">mic</i></a>
+                <a id="vocinaOff" href="#" onClick="selectorVocina(true)"><i class="material-icons">volume_off</i></a>
+                <a id="vocinaOn" href="#" onClick="selectorVocina(false)" style="display: none;"><i class="material-icons">volume_up</i></a>
+                <a id="borrarChat" href="#" onClick="borrarChat()"><i class="material-icons">speaker_notes_off</i></a>
+            </div>
+            <div class="col s12">
+                <p id="chatResponse"></p>
+                <div id="mediaContainer"></div>
+            </div>
+        </div>
+        <!-- <p style="text-align: center;">
+            <img src="./images/DTA-Agricola lineal.png" alt="DTA-Agricola" style="width: 120px;"> <br> 
+            &copy; 2020 - 2023 Todos los derechos reservados
+        </p> -->
+    </div>
     
 </body>  
 

@@ -1,0 +1,4 @@
+Convertir tensor a Pyodide 
+
+PyScript
+ONNX

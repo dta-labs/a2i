@@ -20,12 +20,12 @@ function predict(preguntas,indice){
     let modelName = `${indice}TrainedModel.json`;
     const modelData = fs.readFileSync(modelName);
     const modelJSON = JSON.parse(modelData);
+    const expresionesRegulares = modelJSON.expresionesRegulares.map(str => new RegExp(str));
+    const oracionClaseDict = modelJSON.oracionClaseDict;
     // const modelo = brain.NeuralNetwork.fromJSON(modelJSON);
 
     const modelo = new brain.NeuralNetwork();
     modelo.fromJSON(modelJSON);
-  
-    const expresionesRegulares = [];
 
     for (pregunta of preguntas){
         const preguntaTokenizada = pregunta;
